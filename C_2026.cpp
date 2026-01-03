@@ -29,15 +29,29 @@ void file_i_o(){
     cout.tie(0);
 }
 int main(){
-    file_i_o();
-    long long n;cin>>n;
-    vector<ll> v(n);
-    for(int i=0;i<n;i++) cin>>v[i];
-    sort(begin(v),end(v));
-    ll ans=0,i=0;
-    while(i<n){
-        ans++;
-        i=upper_bound(begin(v),end(v),v[i])-begin(v);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N; cin >> N;
+    vector<int> cnt(N+1,0);
+
+    for(ll x=1; x*x<=N; x++){
+        for(ll y=x+1; ; y++){
+            ll s = x*x + y*y;
+            if(s > N) break;
+            cnt[s]++;
+        }
     }
-    cout<<ans;
+
+    vector<int> ans;
+    for(int i=1;i<=N;i++){
+        if(cnt[i]==1) ans.push_back(i);
+    }
+
+    cout << ans.size() << "\n";
+    for(int i=0;i<(int)ans.size();i++){
+        if(i) cout << " ";
+        cout << ans[i];
+    }
+    cout << "\n";
 }

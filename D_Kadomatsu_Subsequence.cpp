@@ -29,15 +29,24 @@ void file_i_o(){
     cout.tie(0);
 }
 int main(){
-    file_i_o();
-    long long n;cin>>n;
-    vector<ll> v(n);
-    for(int i=0;i<n;i++) cin>>v[i];
-    sort(begin(v),end(v));
-    ll ans=0,i=0;
-    while(i<n){
-        ans++;
-        i=upper_bound(begin(v),end(v),v[i])-begin(v);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N;
+    cin >> N;
+    vector<ll> A(N);
+    for(int i=0;i<N;i++) cin >> A[i];
+    unordered_map<ll,ll> L, R;
+    for(ll v : A) R[v]++;
+    ll ans = 0;
+    for(int j=0;j<N;j++){
+        R[A[j]]--;
+        if(A[j] % 5 == 0){
+            ll x = A[j] / 5;
+            ans += R[7*x] * R[3*x];
+            ans += L[7*x] * L[3*x];
+        }
+        L[A[j]]++;
     }
-    cout<<ans;
+    cout<< ans<<endl;
 }
